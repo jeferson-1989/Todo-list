@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Form from './components/Form';
-import List from './components/List';
+import Form from './components/Form/Form';
+import List from './components/List/List';
 
 
 //componente
@@ -32,21 +32,27 @@ export default function App() {
   } 
 
   const editTask = (text, id) => {
-    const updatedTasks = tasks.map(element => {
+    const updatedTask = tasks.map(element => {
       if(element.id === id) {
-        element.task= text;
-        element.isEditing = true;
+        return {
+          ...element,
+          task: text,
+          isEditing: true,
+        }
       }
       return element;
     })
 
-   setTask(updatedTasks);
+   setTask(updatedTask);
   }
 
   const onFinishEdit = (id) => {
     const updatedTasks = tasks.map(element => {
       if(element.id === id) {
-        element.isEditing = false;
+        return {
+          ...element,
+          isEditing: false,
+        }
       }
       return element;
     })
@@ -58,12 +64,12 @@ export default function App() {
     <div className="App">
       <Form onSave={addTask} />
       <List
-        onToggle={onToggle}
-        deleteTask={deleteTask}
-        editTask={editTask}
-        tasks={tasks}
-        onFinishEdit={onFinishEdit}
-      />
+          onToggle={onToggle}
+          deleteTask={deleteTask}
+          editTask={editTask}
+          tasks={tasks}
+          onFinishEdit={onFinishEdit}
+        />
     </div>
   );
 }
